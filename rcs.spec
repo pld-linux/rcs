@@ -80,7 +80,7 @@ autoconf
 %configure \
 	--with-diffutils
 touch src/conf.h
-%{__make} 
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -91,7 +91,7 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
 
 gzip -9nf NEWS REFS
- 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
