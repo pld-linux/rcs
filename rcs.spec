@@ -70,7 +70,7 @@ gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%attr(755,root,root) /usr/bin/*
+%attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
 
 %clean
