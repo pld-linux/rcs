@@ -1,11 +1,13 @@
 Summary:	RCS - version control system
+Summary(es):	RCS - sistema de control de versiones
 Summary(de):	RCS - Versionssteuersystem
 Summary(fr):	RCS - Système de contrôle de version
 Summary(pl):	RCS - system kontroli wersji
+Summary(pt_BR):	RCS - sistema de controle de versões
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	14
+Release:	16
 License:	GPL
 Group:		Development/Version Control
 Group(de):	Entwicklung/Versionkontrolle
@@ -13,6 +15,9 @@ Group(pl):	Programowanie/Zarz±dzanie wersjami
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-stupidrcs.patch
 Patch1:		%{name}-DESTDIR.patch
+Patch2:		%{name}-security.patch
+URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,6 +34,13 @@ Erkennung und das Zusammenführen von Revisionen. RCS ist praktisch für
 Texte, die häufig revidiert werden, etwa Programme, Dokumentation,
 Graphiken, Artikel und Formulare.
 
+%description -l es
+Sistema de Control de Revisión (RCS) administra múltiples revisiones
+de archivos. RCS automatiza el almacenamiento, recuperación, registro,
+identificación y la fusión de revisiones. Es útil para textos se
+revisan frecuentemente, como programas, documentación, gráficos y
+formularios de cartas.
+
 %description -l fr
 Le système de contrôle de révision (RCS) gère les nombreuses révisions
 des fichiers. RCS automatise le stockage, la récupération,
@@ -44,6 +56,13 @@ z archiwum jak i ³±czenie dokumentów ró¿nych wersji. RCS jest wygodny
 do zarz±dzania dokumentów czêsto zmienianych jak kod ¼ród³owy
 programów, dokumentacja, grafika czy listy.
 
+%description -l pt_BR
+O Sistema de Controle de Revisão (RCS) administra múltiplas revisões
+de arquivos. RCS automatiza o armazenamento, recuperação, registro,
+identificação e a fusão de revisões. RCS é útil para texto que é
+revisado freqüentemente, como programas, documentação, gráficos e
+formulários de cartas.
+
 %description -l tr
 Sürüm denetim sistemi (Revision Control System - RCS) bir dosyanýn
 birden fazla sürümünü denetlemek için kullanýlýr. RCS dosya üzerindeki
@@ -55,6 +74,7 @@ kodlarý, belgeler ve makaleler için son derece yararlý bir araçtýr.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 autoconf
