@@ -90,14 +90,13 @@ rm -rf $RPM_BUILD_ROOT
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
 
-gzip -9nf NEWS REFS
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc NEWS REFS
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
 %lang(fi) %{_mandir}/fi/man[15]/*
