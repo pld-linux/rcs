@@ -8,6 +8,7 @@ Version:	5.7
 Release:	11
 Copyright:	GPL
 Group:		Development/Version Control
+Group(pl):	Programowanie/Zarzadzanie wersjami
 Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch:		rcs-stupidrcs.patch
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -53,7 +54,7 @@ ve makaleler için son derece yararlý bir araçtýr.
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure \
+./configure %{_target} \
 	--prefix=/usr \
 	--with-diffutils
 touch src/conf.h
