@@ -63,9 +63,8 @@ make
 rm -rf $RPM_BUILD_ROOT
 make install prefix=$RPM_BUILD_ROOT/usr
 
-strip $RPM_BUILD_ROOT/usr/bin/*
-
-gzip -9nf NEWS REFS
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* \
+	NEWS REFS
  
 %files
 %defattr(644,root,root,755)
