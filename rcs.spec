@@ -1,16 +1,16 @@
-Summary:     RCS - version control system
-Summary(de): RCS - Versionssteuersystem
-Summary(fr): RCS - Système de contrôle de version
-Summary(pl): RCS - system kontroli wersji
-Summary(tr): Sürüm denetleme sistemi
-Name:        rcs
-Version:     5.7
-Release:     8
-Copyright:   GPL
-Group:       Development/Version Control
-Source:      ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch:       rcs-5.7-stupidrcs.patch
-Buildroot:   /tmp/%{name}-%{version}-root
+Summary:	RCS - version control system
+Summary(de):	RCS - Versionssteuersystem
+Summary(fr):	RCS - Système de contrôle de version
+Summary(pl):	RCS - system kontroli wersji
+Summary(tr):	Sürüm denetleme sistemi
+Name:		rcs
+Version:	5.7
+Release:	11
+Copyright:	GPL
+Group:		Development/Version Control
+Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Patch:		rcs-stupidrcs.patch
+Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
 The Revision Control System (RCS) manages multiple revisions of files. RCS
@@ -52,7 +52,10 @@ ve makaleler için son derece yararlý bir araçtýr.
 %patch -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS=-s ./configure --prefix=/usr --with-diffutils
+CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+./configure \
+	--prefix=/usr \
+	--with-diffutils
 touch src/conf.h
 make 
 
@@ -62,15 +65,30 @@ make install prefix=$RPM_BUILD_ROOT/usr
 
 strip $RPM_BUILD_ROOT/usr/bin/*
 
+gzip -9nf NEWS REFS
+ 
 %files
-%attr(644, root, root, 755) %doc NEWS REFS
-%attr(755, root, root) /usr/bin/*
-%attr(644, root,  man) /usr/man/man[15]/*
+%defattr(644,root,root,755)
+%doc *.gz
+%attr(755,root,root) /usr/bin/*
+/usr/man/man[15]/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Thu Apr  1 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [5.7-11]
+- removed man group from man pages,
+- gzipped %doc.
+
+* Thu Oct 01 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [5.7-8d]
+- fixed ELF binaries permissions,
+- added %defattr support,
+- build against Tornado,
+- minor modifications of the spec file.
+
 * Sun Aug  2 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [5.7-8]
 - added pl translation,
