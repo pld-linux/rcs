@@ -8,7 +8,7 @@ Version:	5.7
 Release:	12
 Copyright:	GPL
 Group:		Development/Version Control
-Group(pl):	Programowanie/Zarzadzanie Wersjami
+Group(pl):	Programowanie/Zarz±dzanie Wersjami
 Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch0:		rcs-stupidrcs.patch
 Patch1:		rcs-DESTDIR.patch
