@@ -7,7 +7,7 @@ Summary(pt_BR):	RCS - sistema de controle de versões
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	17
+Release:	18
 License:	GPL
 Group:		Development/Version Control
 Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
@@ -87,11 +87,11 @@ touch src/conf.h
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 rm -f $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
