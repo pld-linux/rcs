@@ -5,13 +5,14 @@ Summary(pl):	RCS - system kontroli wersji
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	12
+Release:	14
 License:	GPL
 Group:		Development/Version Control
-Group(pl):	Programowanie/Zarz±dzanie Wersjami
+Group(de):	Entwicklung/Versionkontrolle
+Group(pl):	Programowanie/Zarz±dzanie wersjami
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch0:		rcs-stupidrcs.patch
-Patch1:		rcs-DESTDIR.patch
+Patch0:		%{name}-stupidrcs.patch
+Patch1:		%{name}-DESTDIR.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -57,7 +58,6 @@ kodlarý, belgeler ve makaleler için son derece yararlý bir araçtýr.
 
 %build
 autoconf
-LDFLAGS="-s"; export LDFLAGS \
 %configure \
 	--with-diffutils
 touch src/conf.h
@@ -65,10 +65,10 @@ touch src/conf.h
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	NEWS REFS
+gzip -9nf NEWS REFS
  
 %clean
 rm -rf $RPM_BUILD_ROOT
