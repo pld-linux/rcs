@@ -5,18 +5,19 @@ Summary(pl):	RCS - system kontroli wersji
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	11
+Release:	12
 Copyright:	GPL
 Group:		Development/Version Control
 Group(pl):	Programowanie/Zarzadzanie wersjami
 Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Patch:		rcs-stupidrcs.patch
+Patch0:		rcs-stupidrcs.patch
+Patch1:		rcs-DESTDIR.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
 The Revision Control System (RCS) manages multiple revisions of files. RCS
 automates the storing, retrieval, logging, identification, and merging of
-revisions.  RCS is useful for text that is revised frequently, for example
+revisions. RCS is useful for text that is revised frequently, for example
 programs, documentation, graphics, papers, and form letters.
 
 %description -l de
@@ -49,62 +50,36 @@ kolaylaþtýrýr. Üzerinde sýkça deðiþiklik yapýlan program kodlarý, belgeler
 ve makaleler için son derece yararlý bir araçtýr.
 
 %prep
-%setup -q
-%patch -p1
+%setup  -q
+%patch0 -p1
+%patch1 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target_platform} \
-	--prefix=/usr \
+autoconf
+LDFLAGS="-s"; export LDFLAGS \
+%configure \
 	--with-diffutils
 touch src/conf.h
 make 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install prefix=$RPM_BUILD_ROOT/usr
+make install DESTDIR=$RPM_BUILD_ROOT
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	NEWS REFS
  
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %files
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %changelog
-* Thu Apr  1 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [5.7-11]
-- removed man group from man pages,
-- gzipped %doc.
-
-* Thu Oct 01 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [5.7-8d]
-- fixed ELF binaries permissions,
-- added %defattr support,
-- build against Tornado,
-- minor modifications of the spec file.
-
-* Sun Aug  2 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [5.7-8]
-- added pl translation,
-- Buildroot changed to /tmp/%%{name}-%%{version}-root,
-- added -q %setup parameter,
-- added using %%{name} and %%{version} macro in Source,
-- "rm -rf $RPM_BUILD_ROOT" moved from %prep to %install,
-- simplification in %install,
-- added %defattr and %attr macros in %files (allows building package from
-  non-root account).
-
-* Tue May 05 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Wed Oct 21 1997 Cristian Gafton <gafton@redhat.com>
-- fixed the spec file; added BuildRoot
-
-* Fri Jul 18 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
+* Fri Jun 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [5.7-12]
+- based on RH spec,
+- spec rewrited by PLD team.
