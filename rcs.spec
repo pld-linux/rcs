@@ -64,14 +64,14 @@ make
 rm -rf $RPM_BUILD_ROOT
 make install prefix=$RPM_BUILD_ROOT/usr
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man*/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	NEWS REFS
  
 %files
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(755,root,root) /usr/bin/*
-/usr/man/man[15]/*
+%{_mandir}/man[15]/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
