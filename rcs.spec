@@ -12,7 +12,7 @@ Group(pl):	Programowanie/Zarzadzanie wersjami
 Source:		ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Patch0:		rcs-stupidrcs.patch
 Patch1:		rcs-DESTDIR.patch
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The Revision Control System (RCS) manages multiple revisions of files. RCS
