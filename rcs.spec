@@ -12,7 +12,7 @@ License:	GPL
 Group:		Development/Version Control
 Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
 # Source0-md5:	4c8e896f2d2446fa593c6f1601a4fb75
-Source1:	%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	ba094b833436afc14ac1679a78e50da5
 Patch0:		%{name}-stupidrcs.patch
 Patch1:		%{name}-DESTDIR.patch
