@@ -77,9 +77,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
-
-%changelog
-* Fri Jun 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [5.7-12]
-- based on RH spec,
-- spec rewrited by PLD team.
