@@ -7,7 +7,7 @@ Summary(pt_BR):	RCS - sistema de controle de versões
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	19
+Release:	20
 License:	GPL
 Group:		Development/Version Control
 Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
