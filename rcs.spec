@@ -76,7 +76,7 @@ kodlarý, belgeler ve makaleler için son derece yararlý bir araçtýr.
 %patch2 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--with-diffutils
 touch src/conf.h
