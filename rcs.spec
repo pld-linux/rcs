@@ -10,7 +10,7 @@ Version:	5.7
 Release:	17
 License:	GPL
 Group:		Development/Version Control
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-stupidrcs.patch
 Patch1:		%{name}-DESTDIR.patch
