@@ -7,12 +7,13 @@ Summary(pt_BR):	RCS - sistema de controle de versões
 Summary(tr):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	16
+Release:	17
 License:	GPL
 Group:		Development/Version Control
 Group(de):	Entwicklung/Versionkontrolle
 Group(pl):	Programowanie/Zarz±dzanie wersjami
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-stupidrcs.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-security.patch
@@ -88,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+rm -f $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
+
 gzip -9nf NEWS REFS
  
 %clean
@@ -98,3 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man[15]/*
+%lang(fi) %{_mandir}/fi/man[15]/*
+%lang(ja) %{_mandir}/ja/man[15]/*
+%lang(pl) %{_mandir}/pl/man[15]/*
