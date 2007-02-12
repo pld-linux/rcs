@@ -1,10 +1,10 @@
 Summary:	RCS - version control system
-Summary(es):	RCS - sistema de control de versiones
-Summary(de):	RCS - Versionssteuersystem
-Summary(fr):	RCS - Système de contrôle de version
-Summary(pl):	RCS - system kontroli wersji
-Summary(pt_BR):	RCS - sistema de controle de versões
-Summary(tr):	Sürüm denetleme sistemi
+Summary(es.UTF-8):   RCS - sistema de control de versiones
+Summary(de.UTF-8):   RCS - Versionssteuersystem
+Summary(fr.UTF-8):   RCS - SystÃ¨me de contrÃ´le de version
+Summary(pl.UTF-8):   RCS - system kontroli wersji
+Summary(pt_BR.UTF-8):   RCS - sistema de controle de versÃµes
+Summary(tr.UTF-8):   SÃ¼rÃ¼m denetleme sistemi
 Name:		rcs
 Version:	5.7
 Release:	20
@@ -28,48 +28,48 @@ merging of revisions. RCS is useful for text that is revised
 frequently, for example programs, documentation, graphics, papers, and
 form letters.
 
-%description -l de
+%description -l de.UTF-8
 Das Revision Control Syste (RCS) verwaltet mehrere Dateirevisionen. Es
 automatisiert das Abspeichern, das Einlesen, das Aufzeichnen, die
-Erkennung und das Zusammenführen von Revisionen. RCS ist praktisch für
-Texte, die häufig revidiert werden, etwa Programme, Dokumentation,
+Erkennung und das ZusammenfÃ¼hren von Revisionen. RCS ist praktisch fÃ¼r
+Texte, die hÃ¤ufig revidiert werden, etwa Programme, Dokumentation,
 Graphiken, Artikel und Formulare.
 
-%description -l es
-Sistema de Control de Revisión (RCS) administra múltiples revisiones
-de archivos. RCS automatiza el almacenamiento, recuperación, registro,
-identificación y la fusión de revisiones. Es útil para textos se
-revisan frecuentemente, como programas, documentación, gráficos y
+%description -l es.UTF-8
+Sistema de Control de RevisiÃ³n (RCS) administra mÃºltiples revisiones
+de archivos. RCS automatiza el almacenamiento, recuperaciÃ³n, registro,
+identificaciÃ³n y la fusiÃ³n de revisiones. Es Ãºtil para textos se
+revisan frecuentemente, como programas, documentaciÃ³n, grÃ¡ficos y
 formularios de cartas.
 
-%description -l fr
-Le système de contrôle de révision (RCS) gère les nombreuses révisions
-des fichiers. RCS automatise le stockage, la récupération,
-l'identification et le mélange des révisions. RCS sert aux textes
-révisés fréquemment, par exemple les "programmes, la documentation,
+%description -l fr.UTF-8
+Le systÃ¨me de contrÃ´le de rÃ©vision (RCS) gÃ¨re les nombreuses rÃ©visions
+des fichiers. RCS automatise le stockage, la rÃ©cupÃ©ration,
+l'identification et le mÃ©lange des rÃ©visions. RCS sert aux textes
+rÃ©visÃ©s frÃ©quemment, par exemple les "programmes, la documentation,
 les graphiques, les articles et les lettres.
 
-%description -l pl
-Revision Control System (RCS) - w wolnym t³umaczeniu system kontroli
-wersji umo¿liwia zarz±dzanie wieloma wersjami plików. Za pomoc± RCS
-mo¿na w prosty sposób automatyzowaæ sk³adowanie, wyci±ganie, logowanie
-z archiwum jak i ³±czenie dokumentów ró¿nych wersji. RCS jest wygodny
-do zarz±dzania dokumentów czêsto zmienianych jak kod ¼ród³owy
-programów, dokumentacja, grafika czy listy.
+%description -l pl.UTF-8
+Revision Control System (RCS) - w wolnym tÅ‚umaczeniu system kontroli
+wersji umoÅ¼liwia zarzÄ…dzanie wieloma wersjami plikÃ³w. Za pomocÄ… RCS
+moÅ¼na w prosty sposÃ³b automatyzowaÄ‡ skÅ‚adowanie, wyciÄ…ganie, logowanie
+z archiwum jak i Å‚Ä…czenie dokumentÃ³w rÃ³Å¼nych wersji. RCS jest wygodny
+do zarzÄ…dzania dokumentÃ³w czÄ™sto zmienianych jak kod ÅºrÃ³dÅ‚owy
+programÃ³w, dokumentacja, grafika czy listy.
 
-%description -l pt_BR
-O Sistema de Controle de Revisão (RCS) administra múltiplas revisões
-de arquivos. RCS automatiza o armazenamento, recuperação, registro,
-identificação e a fusão de revisões. RCS é útil para texto que é
-revisado freqüentemente, como programas, documentação, gráficos e
-formulários de cartas.
+%description -l pt_BR.UTF-8
+O Sistema de Controle de RevisÃ£o (RCS) administra mÃºltiplas revisÃµes
+de arquivos. RCS automatiza o armazenamento, recuperaÃ§Ã£o, registro,
+identificaÃ§Ã£o e a fusÃ£o de revisÃµes. RCS Ã© Ãºtil para texto que Ã©
+revisado freqÃ¼entemente, como programas, documentaÃ§Ã£o, grÃ¡ficos e
+formulÃ¡rios de cartas.
 
-%description -l tr
-Sürüm denetim sistemi (Revision Control System - RCS) bir dosyanın
-birden fazla sürümünü denetlemek için kullanılır. RCS dosya üzerindeki
-değişikliklerin tutulmasını, saklanmasını, kayıtlarının tutulması
-işlerini kolaylaştırır. Üzerinde sıkça değişiklik yapılan program
-kodları, belgeler ve makaleler için son derece yararlı bir araçtır.
+%description -l tr.UTF-8
+SÃ¼rÃ¼m denetim sistemi (Revision Control System - RCS) bir dosyanÄ±n
+birden fazla sÃ¼rÃ¼mÃ¼nÃ¼ denetlemek iÃ§in kullanÄ±lÄ±r. RCS dosya Ã¼zerindeki
+deÄŸiÅŸikliklerin tutulmasÄ±nÄ±, saklanmasÄ±nÄ±, kayÄ±tlarÄ±nÄ±n tutulmasÄ±
+iÅŸlerini kolaylaÅŸtÄ±rÄ±r. Ãœzerinde sÄ±kÃ§a deÄŸiÅŸiklik yapÄ±lan program
+kodlarÄ±, belgeler ve makaleler iÃ§in son derece yararlÄ± bir araÃ§tÄ±r.
 
 %prep
 %setup  -q
