@@ -1,10 +1,10 @@
 Summary:	RCS - version control system
-Summary(es.UTF-8):   RCS - sistema de control de versiones
-Summary(de.UTF-8):   RCS - Versionssteuersystem
-Summary(fr.UTF-8):   RCS - Système de contrôle de version
-Summary(pl.UTF-8):   RCS - system kontroli wersji
-Summary(pt_BR.UTF-8):   RCS - sistema de controle de versões
-Summary(tr.UTF-8):   Sürüm denetleme sistemi
+Summary(es.UTF-8):	RCS - sistema de control de versiones
+Summary(de.UTF-8):	RCS - Versionssteuersystem
+Summary(fr.UTF-8):	RCS - Système de contrôle de version
+Summary(pl.UTF-8):	RCS - system kontroli wersji
+Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
+Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
 Release:	20
