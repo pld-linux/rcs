@@ -1,0 +1,230 @@
+--- rcs-5.7.orig/configure.in
++++ rcs-5.7/configure.in
+@@ -243,7 +243,7 @@
+ AC_PATH_PROG(ED, ed, ed)
+ 
+ ac_save_path=$PATH
+-PATH=/usr/lib:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
++PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/lib:$PATH
+ AC_PATH_PROGS(SENDMAIL, sendmail mail mailx)
+ PATH=$ac_save_path
+ case $SENDMAIL in
+--- rcs-5.7.orig/man/rcsfile.5in
++++ rcs-5.7/man/rcsfile.5in
+@@ -68,6 +68,7 @@
+ 		\f3state\fP	{\f2id\fP}\f3;\fP
+ 		\f3branches\fP	{\f2num\fP}*\f3;\fP
+ 		\f3next\fP	{\f2num\fP}\f3;\fP
++		{ \f3commitid\fP \f2id\fP\f3;\fP }
+ 		{ \f2newphrase\fP }*
+ .LP
+ \f2desc\fP	::=	\f3desc\fP	\f2string\fP
+@@ -127,6 +128,18 @@
+ Dates use the Gregorian calendar; times use UTC.
+ .PP
+ The
++.I commitid
++is followed by an
++.I id
++token. This token is intended to be unique across
++multiple files and is used to help group files as
++being a part of the same logical commit.
++This token must uniquely identify the commit
++operation that was applied to a set of RCS files.
++In particular, it must be unique among all the
++commitids in this file.
++.PP
++The
+ .I newphrase
+ productions in the grammar are reserved for future extensions
+ to the format of \*r files.
+--- rcs-5.7.orig/man/rlog.1
++++ rcs-5.7/man/rlog.1
+@@ -187,6 +187,10 @@
+ .I logins
+ is omitted, the user's login is assumed.
+ .TP
++.B \-q
++This option has no effect;
++it is provided for consistency with other commands.
++.TP
+ .B \-T
+ This option has no effect;
+ it is present for compatibility with other \*r commands.
+--- rcs-5.7.orig/src/ident.c
++++ rcs-5.7/src/ident.c
+@@ -234,7 +234,7 @@
+       if (c == EOF  &&  feof(fp) | ferror(fp))
+ 	 return c;
+       switch (ctab[c]) {
+-	 case LETTER: case Letter:
++	 case LETTER: case Letter: case DIGIT:
+ 	    *tp++ = c;
+ 	    if (tp < line+sizeof(line)-4)
+ 	       break;
+--- rcs-5.7.orig/src/rcs.c
++++ rcs-5.7/src/rcs.c
+@@ -916,10 +916,11 @@
+ 		getkeystring(Klog);
+ 		if (nextdelta == cuttail) {
+ 			cb = savestring(&curlogbuf);
+-			if (!delta->log.string)
++			if (delta && !delta->log.string)
+ 			    delta->log = cleanlogmsg(curlogbuf.string, cb.size);
+ 			nextlex();
+-			delta->igtext = getphrases(Ktext);
++			if (delta)
++				delta->igtext = getphrases(Ktext);
+ 		} else {
+ 			if (nextdelta->log.string && nextdelta->selector) {
+ 				foutptr = 0;
+--- rcs-5.7.orig/src/rcsbase.h
++++ rcs-5.7/src/rcsbase.h
+@@ -358,6 +358,7 @@
+ 	char const	  * lockedby; /* who locks the revision		    */
+ 	char const	  * state;    /* state of revision (Exp by default) */
+ 	char const	  * name;     /* name (if any) by which retrieved   */
++	char const        * commitid; /* text string to associate commits   */
+ 	struct cbuf	    log;      /* log message requested at checkin   */
+         struct branchhead * branches; /* list of first revisions on branches*/
+ 	struct cbuf	    ig;	      /* ignored phrases in admin part	    */
+@@ -662,6 +663,7 @@
+ extern char const *const expand_names[];
+ extern char const
+ 	Kaccess[], Kauthor[], Kbranch[], Kcomment[],
++	Kcommitid[],
+ 	Kdate[], Kdesc[], Kexpand[], Khead[], Klocks[], Klog[],
+ 	Knext[], Kstate[], Kstrict[], Ksymbols[], Ktext[];
+ void unexpected_EOF P((void)) exiting;
+--- rcs-5.7.orig/src/rcsdiff.c
++++ rcs-5.7/src/rcsdiff.c
+@@ -212,9 +212,13 @@
+ 		    }
+ 		    goto option_handled;
+ 	    case '-': case 'D':
+-		    no_diff_means_no_output = false;
++		    if (c == 'D'
++			|| strcmp(*argv, "--side-by-side") == 0
++			|| strcmp(*argv, "--ifdef") == 0) {
++			no_diff_means_no_output = false;
++		    }
+ 		    /* fall into */
+-	    case 'C': case 'F': case 'I': case 'L': case 'W':
++	    case 'C': case 'F': case 'I': case 'L': case 'U': case 'W':
+ #if DIFF_L
+ 		    if (c == 'L'  &&  ++file_labels == 2)
+ 			faterror("too many -L options");
+--- rcs-5.7.orig/src/rcsedit.c
++++ rcs-5.7/src/rcsedit.c
+@@ -1503,6 +1503,9 @@
+ 	register size_t dl;
+ 	register struct buf *bn;
+ 	register char const *name = isworkfile ? workname : RCSname;
++#	if has_mktemp
++	int fd;
++#	endif
+ 
+ 	dl = basefilename(name) - name;
+ 	bn = &dirtpname[newRCSdirtp_index + isworkfile];
+@@ -1521,10 +1524,12 @@
+ 	catchints();
+ #	if has_mktemp
+ 		VOID strcpy(tp, "XXXXXX");
+-		if (!mktemp(np) || !*np)
++		fd = mkstemp(np);
++		if (fd < 0 || !*np)
+ 		    faterror("can't make temporary pathname `%.*s_%cXXXXXX'",
+ 			(int)dl, name, '0'+isworkfile
+ 		    );
++		close(fd);
+ #	else
+ 		/*
+ 		 * Posix 1003.1-1990 has no reliable way
+--- rcs-5.7.orig/src/rcsfnms.c
++++ rcs-5.7/src/rcsfnms.c
+@@ -285,6 +285,9 @@
+ {
+ 	char *p;
+ 	char const *t = tpnames[n];
++#	if has_mktemp
++	int fd;
++#	endif
+ 
+ 	if (t)
+ 		return t;
+@@ -296,10 +299,12 @@
+ 	    size_t tplen = dir_useful_len(tp);
+ 	    p = testalloc(tplen + 10);
+ 	    VOID sprintf(p, "%.*s%cT%cXXXXXX", (int)tplen, tp, SLASH, '0'+n);
+-	    if (!mktemp(p) || !*p)
++	    fd = mkstemp(p);
++	    if (fd < 0 || !*p)
+ 		faterror("can't make temporary pathname `%.*s%cT%cXXXXXX'",
+ 			(int)tplen, tp, SLASH, '0'+n
+ 		);
++	    close(fd);
+ #	else
+ 	    static char tpnamebuf[TEMPNAMES][L_tmpnam];
+ 	    p = tpnamebuf[n];
+--- rcs-5.7.orig/src/rcsfreeze.sh
++++ rcs-5.7/src/rcsfreeze.sh
+@@ -59,8 +59,7 @@
+ 
+ # Stamp the logfile. Because we order the logfile the most recent
+ # first we will have to save everything right now in a temporary file.
+-TMPLOG=/tmp/rcsfrz$$
+-trap 'rm -f $TMPLOG; exit 1' 1 2 13 15
++TMPLOG=$(tempfile)
+ # Now ask for a log message, continously add to the log file
+ (
+ 	echo "Version: $SYMREVNAME($SYMREV), Date: $DATE
+--- rcs-5.7.orig/src/rcsgen.c
++++ rcs-5.7/src/rcsgen.c
+@@ -547,6 +547,9 @@
+ 
+ 	aprintf(fout, ";\n%s\t%s;\n", Knext, node->next?node->next->num:"");
+ 	awrite(node->ig.string, node->ig.size, fout);
++
++	if (node->commitid)
++		aprintf(fout, "%s\t%s;\n", Kcommitid, node->commitid);
+ }
+ 
+ 
+--- rcs-5.7.orig/src/rcssyn.c
++++ rcs-5.7/src/rcssyn.c
+@@ -171,6 +171,7 @@
+ 	Kauthor[]   = "author",
+ 	Kbranch[]   = "branch",
+ 	Kcomment[]  = "comment",
++	Kcommitid[] = "commitid",
+ 	Kdate[]     = "date",
+ 	Kdesc[]     = "desc",
+ 	Kexpand[]   = "expand",
+@@ -433,6 +434,14 @@
+ 	Delta->lockedby = 0;
+ 	Delta->log.string = 0;
+ 	Delta->selector = true;
++
++	if (getkeyopt(Kcommitid)) {
++		Delta->commitid = NextString;
++		nextlex();
++		getsemi(Kcommitid);
++        } else
++		Delta->commitid = NULL;
++
+ 	Delta->ig = getphrases(Kdesc);
+         TotalDeltas++;
+         return (true);
+--- rcs-5.7.orig/src/rlog.c
++++ rcs-5.7/src/rlog.c
+@@ -591,6 +591,10 @@
+ 	      aprintf(out, insDelFormat,
+                              editscript->insertlns, editscript->deletelns);
+ 
++	if ( node->commitid )
++	   aprintf(out, "%s commitid: %s", (editscript) ? ";" : "",
++		   node->commitid);
++
+         newbranch = node->branches;
+         if ( newbranch ) {
+ 	   bufautobegin(&branchnum);
