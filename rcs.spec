@@ -7,7 +7,7 @@ Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
 Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
-Release:	21
+Release:	22
 License:	GPL
 Group:		Development/Version Control
 Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
@@ -17,6 +17,7 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Patch0:		%{name}-stupidrcs.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-security.patch
+Patch3:		%{name}-debian.patch
 URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
 BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -76,6 +77,7 @@ kodları, belgeler ve makaleler için son derece yararlı bir araçtır.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__autoconf}
