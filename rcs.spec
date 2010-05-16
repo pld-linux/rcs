@@ -8,9 +8,9 @@ Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.7
 Release:	22
-License:	GPL
+License:	GPL v2+
 Group:		Development/Version Control
-Source0:	ftp://ftp.gnu.org/pub/gnu/rcs/%{name}-%{version}.tar.gz
+Source0:	http://ftp.gnu.org/gnu/rcs/%{name}-%{version}.tar.gz
 # Source0-md5:	4c8e896f2d2446fa593c6f1601a4fb75
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	ba094b833436afc14ac1679a78e50da5
@@ -100,9 +100,27 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS REFS
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man[15]/*
+%doc CREDITS ChangeLog NEWS README REFS
+%attr(755,root,root) %{_bindir}/ci
+%attr(755,root,root) %{_bindir}/co
+%attr(755,root,root) %{_bindir}/ident
+%attr(755,root,root) %{_bindir}/merge
+%attr(755,root,root) %{_bindir}/rcs
+%attr(755,root,root) %{_bindir}/rcsclean
+%attr(755,root,root) %{_bindir}/rcsdiff
+%attr(755,root,root) %{_bindir}/rcsmerge
+%attr(755,root,root) %{_bindir}/rlog
+%{_mandir}/man1/ci.1*
+%{_mandir}/man1/co.1*
+%{_mandir}/man1/ident.1*
+%{_mandir}/man1/merge.1*
+%{_mandir}/man1/rcs.1*
+%{_mandir}/man1/rcsclean.1*
+%{_mandir}/man1/rcsdiff.1*
+%{_mandir}/man1/rcsintro.1*
+%{_mandir}/man1/rcsmerge.1*
+%{_mandir}/man1/rlog.1*
+%{_mandir}/man5/rcsfile.5*
 %lang(fi) %{_mandir}/fi/man[15]/*
 %lang(ja) %{_mandir}/ja/man[15]/*
 %lang(pl) %{_mandir}/pl/man[15]/*
