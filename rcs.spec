@@ -1,6 +1,6 @@
 Summary:	RCS - version control system
-Summary(es.UTF-8):	RCS - sistema de control de versiones
 Summary(de.UTF-8):	RCS - Versionssteuersystem
+Summary(es.UTF-8):	RCS - sistema de control de versiones
 Summary(fr.UTF-8):	RCS - Système de contrôle de version
 Summary(pl.UTF-8):	RCS - system kontroli wersji
 Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
@@ -20,6 +20,7 @@ Patch2:		%{name}-security.patch
 Patch3:		%{name}-debian.patch
 URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
 BuildRequires:	autoconf
+BuildRequires:	groff
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
