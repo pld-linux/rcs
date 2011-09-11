@@ -6,20 +6,16 @@ Summary(pl.UTF-8):	RCS - system kontroli wersji
 Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
 Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
-Version:	5.7
-Release:	22
-License:	GPL v2+
+Version:	5.8
+Release:	1
+License:	GPL v3+
 Group:		Development/Version Control
 Source0:	http://ftp.gnu.org/gnu/rcs/%{name}-%{version}.tar.gz
-# Source0-md5:	4c8e896f2d2446fa593c6f1601a4fb75
+# Source0-md5:	c0fa1f3528418cee83b7e6e06fc87957
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	ba094b833436afc14ac1679a78e50da5
-Patch0:		%{name}-stupidrcs.patch
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-security.patch
-Patch3:		%{name}-debian.patch
+Patch0:		%{name}-debian.patch
 URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
-BuildRequires:	autoconf
 BuildRequires:	groff
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -74,17 +70,13 @@ işlerini kolaylaştırır. Üzerinde sıkça değişiklik yapılan program
 kodları, belgeler ve makaleler için son derece yararlı bir araçtır.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-%{__autoconf}
 %configure \
-	--with-diffutils
-touch src/conf.h
+	--with-mailer=/usr/lib/sendmail
+
 %{__make}
 
 %install
@@ -94,14 +86,14 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-rm -f $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CREDITS ChangeLog NEWS README REFS
+%doc AUTHORS ChangeLog NEWS README THANKS
 %attr(755,root,root) %{_bindir}/ci
 %attr(755,root,root) %{_bindir}/co
 %attr(755,root,root) %{_bindir}/ident
