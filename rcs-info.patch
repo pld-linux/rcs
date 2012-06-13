@@ -1,0 +1,14 @@
+--- rcs-5.8.1/doc/rcs.texi.orig	2012-06-05 11:56:46.000000000 +0200
++++ rcs-5.8.1/doc/rcs.texi	2012-06-13 18:18:23.482682007 +0200
+@@ -50,9 +50,9 @@
+ @end quotation
+ @end copying
+ 
+-@dircategory Version control
++@dircategory Version Control:
+ @direntry
+-* RCS: (rcs).                   GNU Revision Control System.
++* RCS: (rcs).				GNU Revision Control System
+ @end direntry
+ 
+ @titlepage

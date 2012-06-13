@@ -6,17 +6,19 @@ Summary(pl.UTF-8):	RCS - system kontroli wersji
 Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
 Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
-Version:	5.8
+Version:	5.8.1
 Release:	1
 License:	GPL v3+
 Group:		Development/Version Control
 Source0:	http://ftp.gnu.org/gnu/rcs/%{name}-%{version}.tar.gz
-# Source0-md5:	c0fa1f3528418cee83b7e6e06fc87957
+# Source0-md5:	9e791da53d56b97956e45e8ab42b45cb
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	ba094b833436afc14ac1679a78e50da5
 Patch0:		%{name}-debian.patch
+Patch1:		%{name}-info.patch
 URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
 BuildRequires:	groff
+BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -72,6 +74,7 @@ kodları, belgeler ve makaleler için son derece yararlı bir araçtır.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
@@ -87,9 +90,16 @@ rm -rf $RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/rcsfreeze.1*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.rcs-non-english-man-pages
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
+%postun	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
@@ -110,10 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/rcs.1*
 %{_mandir}/man1/rcsclean.1*
 %{_mandir}/man1/rcsdiff.1*
-%{_mandir}/man1/rcsintro.1*
 %{_mandir}/man1/rcsmerge.1*
 %{_mandir}/man1/rlog.1*
 %{_mandir}/man5/rcsfile.5*
 %lang(fi) %{_mandir}/fi/man[15]/*
 %lang(ja) %{_mandir}/ja/man[15]/*
 %lang(pl) %{_mandir}/pl/man[15]/*
+%{_infodir}/rcs.info*
