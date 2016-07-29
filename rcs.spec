@@ -7,7 +7,7 @@ Summary(pt_BR.UTF-8):	RCS - sistema de controle de versões
 Summary(tr.UTF-8):	Sürüm denetleme sistemi
 Name:		rcs
 Version:	5.9.4
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Development/Version Control
 Source0:	http://ftp.gnu.org/gnu/rcs/%{name}-%{version}.tar.xz
@@ -16,7 +16,8 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 # Source1-md5:	ba094b833436afc14ac1679a78e50da5
 Patch0:		%{name}-debian.patch
 Patch1:		%{name}-info.patch
-URL:		http://www.cs.purdue.edu/homes/trinkle/RCS/
+Patch2:		%{name}-move-exiting-to-beginning-of-func-decl.patch
+URL:		https://www.cs.purdue.edu/homes/trinkle/RCS/
 BuildRequires:	groff
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	texinfo
@@ -77,6 +78,7 @@ kodları, belgeler ve makaleler için son derece yararlı bir araçtır.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
